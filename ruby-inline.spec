@@ -1,4 +1,5 @@
 Summary:	Allow embedding of C inline to Ruby
+Summary(pl.UTF-8):	Moduł do osadzania kodu w C w Rubym
 Name:		ruby-inline
 Version:	3.6.3
 Release:	1
@@ -14,9 +15,15 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Ruby Inline is an analog to Perl's Inline::C. Out of the box, it
-allows you to embed C/++ external module code in your ruby script
+allows you to embed C/C++ external module code in your Ruby script
 directly. By writing simple builder classes, you can teach how to cope
-with new languages (fortran, perl, whatever).
+with new languages (Fortran, Perl, whatever).
+
+%description -l pl.UTF-8
+Ruby Inline to odpowiednik Inline::C z Perla. Pozwala na osadzanie
+kodu zewnętrznych modułów w C/C++ bezpośrednio w skrypcie napisanym w
+Rubym. Pisząc proste klasy budujące można nauczyć się jak pracować z
+nowymi językami (Fortranem, Perlem, innymi).
 
 %prep
 %setup -q -c
