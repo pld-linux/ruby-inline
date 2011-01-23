@@ -10,7 +10,7 @@ Source0:	http://rubyforge.org/frs/download.php/20111/RubyInline-%{version}.gem
 URL:		http://www.zenspider.com/ZSS/Products/RubyInline/
 BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	setup.rb = 3.3.1
+BuildRequires:	setup.rb >= 3.3.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
