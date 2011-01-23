@@ -8,7 +8,6 @@ Group:		Development/Languages
 Source0:	http://rubyforge.org/frs/download.php/20111/RubyInline-%{version}.gem
 # Source0-md5:	2daaa20b5b188c8f0ea5d503a0644432
 URL:		http://www.zenspider.com/ZSS/Products/RubyInline/
-BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	setup.rb >= 3.3.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
