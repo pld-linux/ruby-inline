@@ -1,61 +1,41 @@
-Summary:	Allow embedding of C inline to Ruby
-Summary(pl.UTF-8):	Moduł do osadzania kodu w C w Rubym
-Name:		ruby-inline
-Version:	3.6.3
+%define pkgname inline
+%define gemname RubyInline
+Summary:	Inline allows you to write foreign code within your ruby code
+Name:		ruby-%{pkgname}
+Version:	3.14.3
 Release:	1
-License:	Ruby's
+License:	MIT
 Group:		Development/Languages
-Source0:	http://rubyforge.org/frs/download.php/20111/RubyInline-%{version}.gem
-# Source0-md5:	2daaa20b5b188c8f0ea5d503a0644432
+Source0:	https://rubygems.org/downloads/%{gemname}-%{version}.gem
+# Source0-md5:	2de0e2c2cabc5afe513c15a3951ec910
 URL:		http://www.zenspider.com/ZSS/Products/RubyInline/
-BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	setup.rb >= 3.3.1
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
+Requires:	ruby-ZenTest >= 4.3
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Ruby Inline is an analog to Perl's Inline::C. Out of the box, it
-allows you to embed C/C++ external module code in your Ruby script
-directly. By writing simple builder classes, you can teach how to cope
-with new languages (Fortran, Perl, whatever).
-
-%description -l pl.UTF-8
-Ruby Inline to odpowiednik Inline::C z Perla. Pozwala na osadzanie
-kodu zewnętrznych modułów w C/C++ bezpośrednio w skrypcie napisanym w
-Rubym. Pisząc proste klasy budujące można nauczyć się jak pracować z
-nowymi językami (Fortranem, Perlem, innymi).
+Inline allows you to write foreign code within your ruby code. It
+automatically determines if the code in question has changed and builds
+it only when necessary.
 
 %prep
-%setup -q -c
-tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
-cp %{_datadir}/setup.rb .
+%setup -q -n %{gemname}-%{version}
 
 %build
-ruby setup.rb config \
-	--rbdir=%{ruby_rubylibdir} \
-	--sodir=%{ruby_archdir}
-
-ruby setup.rb setup
-
-rdoc --op rdoc lib
-rdoc --ri --op ri lib
-rm ri/created.rid
+%__gem_helper spec
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_archdir},%{ruby_ridir}}
-
-ruby setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
-
-cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir}}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
+cp -p %{gemname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc rdoc
-%{ruby_ridir}/CompilationError
-%{ruby_ridir}/Inline
-%attr(755,root,root) %{_bindir}/inline_package
-%{ruby_rubylibdir}/inline.rb
+%{ruby_vendorlibdir}/inline.rb
+%{ruby_specdir}/%{gemname}-%{version}.gemspec
